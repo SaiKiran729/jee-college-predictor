@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🎓 College Predictor</title>
+    <style>
+      /* General reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: #ffffff;
+        color: #00aaff;
+        line-height: 1.6;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #0073e6;
+        text-shadow: 0 0 10px rgba(0, 170, 255, 0.8);
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 0;
+        animation: typing 8s steps(80, end) forwards;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      p.subtitle {
+        font-size: 1.5rem;
+        color: #0073e6;
+        margin-bottom: 40px;
+      }
+
+      a {
+        display: inline-block;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #0073e6;
+        text-decoration: none;
+        border: 2px solid #00aaff;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+      }
+
+      a:hover {
+        background: #00aaff;
+        color: #ffffff;
+        box-shadow: 0 0 15px rgba(0, 170, 255, 0.8);
+        transform: scale(1.1);
+      }
+
+      .particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        display: block;
+        background: rgba(0, 170, 255, 0.1);
+        box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+        border-radius: 50%;
+        opacity: 0;
+        animation: floatUp linear infinite;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(100vh) scale(0.5);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) scale(1);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="particles"></div>
+
+    <h1>Dreaming of getting into IIT's and NIT's?</h1>
+    <p class="subtitle">We'll help you get the best college for you!</p>
+    <a href="{{ url_for('form') }}">👀 Start Searching..</a>
+
+    <script>
+      // Function to create multiple floating particles
+      function createParticles() {
+        const particlesContainer = document.querySelector('.particles');
+
+        for (let i = 0; i < 50; i++) {  // Increased number of particles
+          const particle = document.createElement('span');
+          particle.classList.add('particle');
+
+          let size = Math.random() * 10 + 5; // Random size between 5px and 15px
+          let duration = Math.random() * 5 + 5; // Random speed between 5s and 10s
+          let positionX = Math.random() * 100; // Random X position
+
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${positionX}%`;
+          particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${Math.random() * 5}s`; // Staggered effect
+
+          particlesContainer.appendChild(particle);
+        }
+      }
+
+      createParticles();
+    </script>
+  </body>
+</html>

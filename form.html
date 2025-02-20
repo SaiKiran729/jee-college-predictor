@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🎓 College Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 2px solid #007bff;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.3s;
+            background: #fff;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-row .form-group {
+            width: 48%;
+        }
+
+        input[type="submit"] {
+            background: #007bff;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 College Predictor</h1>
+        <p>Enter your details to find the best college for you.</p>
+        <form name="f1" method="post" action="{{ url_for('form') }}" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="institute_type">🏫 Select Institute:</label>
+                <select id="institute_type" name="institute_type" required>
+                    <option value="">Select one</option>
+                    <option value="IIT">Indian Institutes of Technology (IIT) 🏩</option>
+                    <option value="NIT">National Institutes of Technology (NIT) 🏢</option>
+
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="opening_rank">📈 Opening JEE Rank:</label>
+                    <input id="opening_rank" name="opening_rank" type="number" min="1" max="1200000" required />
+                </div>
+                <div class="form-group">
+                    <label for="closing_rank">📉 Closing JEE Rank:</label>
+                    <input id="closing_rank" name="closing_rank" type="number" min="1" max="1200000" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="jee_rank">🔢 Enter Your JEE Rank:</label>
+                <input id="jee_rank" name="jee_rank" type="number" min="1" max="1200000" required />
+            </div>
+            <div class="form-group">
+                <label for="category">🗂️ Select Category:</label>
+                <select id="category" name="category" required>
+                    <option value="">Select one</option>
+                    <option value="GEN">GEN</option>
+                    <option value="OBC-NCL">OBC-NCL</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="gender_pool">🚻 Select Gender:</label>
+                <select id="gender_pool" name="gender_pool" required>
+                    <option value="">Select one</option>
+                    <option value="Male">Male 👨‍🎓</option>
+                    <option value="Female">Female 👩‍🎓</option>
+                </select>
+            </div>
+            <input type="submit" value="🔎 Predict Now 🔍">
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            const openingRank = parseInt(document.getElementById('opening_rank').value);
+            const closingRank = parseInt(document.getElementById('closing_rank').value);
+            const jeeRank = parseInt(document.getElementById('jee_rank').value);
+
+            if (openingRank > closingRank) {
+                alert("Opening rank cannot be greater than closing rank!");
+                return false;
+            }
+
+            if (jeeRank < openingRank || jeeRank > closingRank) {
+                alert("Your JEE rank must be between the opening and closing rank!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

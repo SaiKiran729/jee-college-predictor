@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='styles/result.css') }}" rel="stylesheet">
+    <title>🎓🚀 Predicted Colleges</title>
+</head>
+<body>
+    <header>
+        <h1>🎓 Predicted Colleges 💡</h1>
+        <p>Based on your input, here are the most probable colleges for you:</p>
+    </header>
+    <br>
+    <style>
+        /* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to right, #f0f4f8, #d9e2e8);
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  text-align: center;
+  margin: 50px 0;
+  color: #2c3e50;
+  max-width: 1000px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #0073e6;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.3rem;
+  color: #34495e;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.colleges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.college-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #0073e6;
+  transition: box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.college-card h3 {
+  font-size: 2rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.college-card p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 5px 0;
+}
+
+.college-card p strong {
+  color: #0073e6;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+a, button {
+  font-size: 1.2rem;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+a {
+  background-color: #6c757d;
+  color: white;
+  margin-right: 15px;
+  border: none;
+}
+
+a:hover {
+  background-color: #5a6268;
+}
+
+button.download-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+button.download-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+    </style>
+    <main>
+        <section class="colleges-list">
+            {% for college in colleges %}
+                <div class="college-card">
+                    <h3>{{ college.institute_short }}</h3>
+                    <h2><p><strong>Program:</strong> {{ college.program_name }}</p>
+                    <p><strong>Degree:</strong> {{ college.degree_short }}</p></h2>
+                </div>
+            {% endfor %}
+        </section>
+        <div class="button-container">
+            <a href="{{ url_for('form') }}" class="back-button">🔙 Go Back</a>
+            <button id="downloadButton" class="download-button">📥 Download List</button>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const colleges = [
+                {% for college in colleges %}
+                    "{{ college.institute_short }} - {{ college.program_name }} ({{ college.degree_short }})",
+                {% endfor %}
+            ];
+            const collegeList = colleges.join('\n');
+            const blob = new Blob([collegeList], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'colleges_list.txt';
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+    </script>
+</body>
+</html>
